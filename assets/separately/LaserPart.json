@@ -1,0 +1,283 @@
+﻿{"frames": {
+
+"LaserPart0000":
+{
+	"frame": {"x":10,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0001":
+{
+	"frame": {"x":10,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0002":
+{
+	"frame": {"x":142,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0003":
+{
+	"frame": {"x":142,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0004":
+{
+	"frame": {"x":274,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0005":
+{
+	"frame": {"x":274,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0006":
+{
+	"frame": {"x":406,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0007":
+{
+	"frame": {"x":406,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0008":
+{
+	"frame": {"x":538,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0009":
+{
+	"frame": {"x":538,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0010":
+{
+	"frame": {"x":670,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0011":
+{
+	"frame": {"x":670,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0012":
+{
+	"frame": {"x":802,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0013":
+{
+	"frame": {"x":802,"y":10,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0014":
+{
+	"frame": {"x":10,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0015":
+{
+	"frame": {"x":10,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0016":
+{
+	"frame": {"x":142,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0017":
+{
+	"frame": {"x":142,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0018":
+{
+	"frame": {"x":274,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0019":
+{
+	"frame": {"x":274,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0020":
+{
+	"frame": {"x":10,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0021":
+{
+	"frame": {"x":10,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0022":
+{
+	"frame": {"x":142,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0023":
+{
+	"frame": {"x":142,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0024":
+{
+	"frame": {"x":406,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0025":
+{
+	"frame": {"x":406,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0026":
+{
+	"frame": {"x":538,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0027":
+{
+	"frame": {"x":538,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0028":
+{
+	"frame": {"x":142,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0029":
+{
+	"frame": {"x":142,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0030":
+{
+	"frame": {"x":406,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0031":
+{
+	"frame": {"x":406,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0032":
+{
+	"frame": {"x":670,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+},
+"LaserPart0033":
+{
+	"frame": {"x":670,"y":148,"w":122,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":122,"h":128},
+	"sourceSize": {"w":122,"h":128}
+}},
+"meta": {
+	"app": "Adobe Animate",
+	"version": "23.0.1.70",
+	"image": "LaserPart.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":512},
+	"scale": "1"
+}
+}

@@ -1,0 +1,107 @@
+﻿{"frames": {
+
+"Glitch0000":
+{
+	"frame": {"x":10,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0001":
+{
+	"frame": {"x":10,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0002":
+{
+	"frame": {"x":10,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0003":
+{
+	"frame": {"x":10,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0004":
+{
+	"frame": {"x":171,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0005":
+{
+	"frame": {"x":171,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0006":
+{
+	"frame": {"x":171,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0007":
+{
+	"frame": {"x":171,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0008":
+{
+	"frame": {"x":332,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0009":
+{
+	"frame": {"x":332,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0010":
+{
+	"frame": {"x":332,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+},
+"Glitch0011":
+{
+	"frame": {"x":332,"y":10,"w":151,"h":109},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":151,"h":109},
+	"sourceSize": {"w":151,"h":109}
+}},
+"meta": {
+	"app": "Adobe Animate",
+	"version": "23.0.1.70",
+	"image": "Glitch.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":256},
+	"scale": "1"
+}
+}

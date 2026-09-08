@@ -1,0 +1,107 @@
+﻿{"frames": {
+
+"EyeBrokes0000":
+{
+	"frame": {"x":10,"y":10,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0001":
+{
+	"frame": {"x":10,"y":10,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0002":
+{
+	"frame": {"x":287,"y":10,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0003":
+{
+	"frame": {"x":287,"y":10,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0004":
+{
+	"frame": {"x":564,"y":10,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0005":
+{
+	"frame": {"x":564,"y":10,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0006":
+{
+	"frame": {"x":10,"y":280,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0007":
+{
+	"frame": {"x":10,"y":280,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0008":
+{
+	"frame": {"x":287,"y":280,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0009":
+{
+	"frame": {"x":287,"y":280,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0010":
+{
+	"frame": {"x":564,"y":280,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+},
+"EyeBrokes0011":
+{
+	"frame": {"x":564,"y":280,"w":267,"h":260},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":267,"h":260},
+	"sourceSize": {"w":267,"h":260}
+}},
+"meta": {
+	"app": "Adobe Animate",
+	"version": "23.0.1.70",
+	"image": "EyeBrokes.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1"
+}
+}

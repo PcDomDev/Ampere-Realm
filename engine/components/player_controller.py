@@ -1,19 +1,19 @@
 import warnings
 
-import pygame
-
 from engine.components.animator import Animator
 from engine.components.component import Component
 from engine.components.rigidbody2d import Rigidbody2D
 from engine.debug_manager import DebugManager
+from engine.input.input_manager import Input
+from engine.input.key import Key
 from engine.utils.warnings import EngineWarning
 
 DEFAULT_KEYBINDS = {
-    "left": [pygame.K_a, pygame.K_LEFT],
-    "right": [pygame.K_d, pygame.K_RIGHT],
-    "up": [pygame.K_w, pygame.K_UP],
-    "down": [pygame.K_s, pygame.K_DOWN],
-    "jump": [pygame.K_SPACE],
+    "left": [Key.A, Key.LEFT],
+    "right": [Key.D, Key.RIGHT],
+    "up": [Key.W, Key.UP],
+    "down": [Key.S, Key.DOWN],
+    "jump": [Key.SPACE],
 }
 
 DEFAULT_ANIM_MAP = {
@@ -34,7 +34,13 @@ class PlayerController(Component):
     """A small, extensible character controller with two built-in modes:
 
       - "top_down": 4/8-directional movement, no gravity.
-      - "platformer": horizontal run + gravity-driven jump via Rigidbody2D.
+      - "platformer": horizontal run + gravity-driven jump via Rigidbody2D,
+        with optional multi-jump (see max_jumps below).
+
+    Reads input through the Input/Key system (engine/input/) rather than
+    calling pygame directly, so `keybinds` accepts Key.* constants, raw
+    pygame.K_* constants, or key-name strings interchangeably - see
+    engine/input/key.py.
 
     Extending it: rather than overriding update() wholesale, override one of
     the small hooks below:
@@ -43,9 +49,11 @@ class PlayerController(Component):
       - `_play_platformer_animation` / `_play_top_down_animation`
                                     to change animation-selection rules
       - `_read_move_axis`          to change how input maps to a direction
+      - `_can_jump` / `_wants_to_jump`
+                                    to change what counts as "allowed to jump"
 
-    That keeps custom abilities (double jump, dash, wall-slide, ...) additive
-    instead of requiring a copy-paste of the whole class.
+    That keeps custom abilities (a dash, wall-slide, etc.) additive instead
+    of requiring a copy-paste of the whole class.
     """
 
     def __init__(
@@ -57,6 +65,7 @@ class PlayerController(Component):
         anim_map=None,
         coyote_time=0.1,
         jump_buffer_time=0.1,
+        max_jumps=1,
     ):
         super().__init__()
 
@@ -76,13 +85,23 @@ class PlayerController(Component):
         self.anim_map = anim_map or dict(DEFAULT_ANIM_MAP)
 
         # "Coyote time": a short grace window after walking off a ledge
-        # where a jump still registers - matches what players intuitively
-        # expect, and is standard in most platformers. Set to 0 to disable.
+        # where the *first* jump still registers - matches what players
+        # intuitively expect, and is standard in most platformers. Set to
+        # 0 to disable. Only applies to the first jump in a chain - see
+        # _can_jump(): once airborne, further jumps (double/triple jump)
+        # are available immediately, since the player is deliberately
+        # using them, not accidentally walking off a ledge.
         self.coyote_time = coyote_time
         # "Jump buffering": a jump pressed slightly *before* landing still
         # fires the instant the character touches down, instead of being
         # dropped because is_grounded wasn't true yet. Set to 0 to disable.
         self.jump_buffer_time = jump_buffer_time
+
+        # How many times the character can jump before needing to touch
+        # the ground again. 1 = a normal single jump (the default,
+        # unchanged behaviour). 2 = a double jump, 3 = a triple jump, etc.
+        self.max_jumps = max(1, max_jumps)
+        self._jumps_used = 0
 
         # Large initial values so neither grace window is (incorrectly)
         # already active before the player has ever touched the ground once.
@@ -102,34 +121,39 @@ class PlayerController(Component):
                 f"but has no Rigidbody2D - gravity and jumping will not work."
             )
 
-    def update(self, delta_time):
-        keys = pygame.key.get_pressed()
+    @property
+    def jumps_remaining(self):
+        """How many more times the character can jump before needing to
+        touch the ground again - handy for a UI readout (e.g. a UIText
+        showing "Jumps: 2/2")."""
+        return max(0, self.max_jumps - self._jumps_used)
 
+    def update(self, delta_time):
         if self.movement_type == "top_down":
-            self._update_top_down(keys, delta_time)
+            self._update_top_down(delta_time)
         elif self.movement_type == "platformer":
-            self._update_platformer(keys, delta_time)
+            self._update_platformer(delta_time)
         # else: already warned about the bad movement_type in __init__.
 
-    def _is_pressed(self, keys_state, action):
-        return any(keys_state[k] for k in self.keybinds.get(action, []))
+    def _is_pressed(self, action):
+        return any(Input.is_pressed(k) for k in self.keybinds.get(action, []))
 
-    def _read_move_axis(self, keys):
+    def _read_move_axis(self):
         move_x, move_y = 0, 0
-        if self._is_pressed(keys, "left"):
+        if self._is_pressed("left"):
             move_x -= 1
-        if self._is_pressed(keys, "right"):
+        if self._is_pressed("right"):
             move_x += 1
-        if self._is_pressed(keys, "up"):
+        if self._is_pressed("up"):
             move_y -= 1
-        if self._is_pressed(keys, "down"):
+        if self._is_pressed("down"):
             move_y += 1
         return move_x, move_y
 
     # ---------------- top-down mode ----------------
 
-    def _update_top_down(self, keys, delta_time):
-        move_x, move_y = self._read_move_axis(keys)
+    def _update_top_down(self, delta_time):
+        move_x, move_y = self._read_move_axis()
 
         if move_x != 0 and move_y != 0:
             move_x *= _DIAGONAL_FACTOR
@@ -161,10 +185,10 @@ class PlayerController(Component):
 
     # ---------------- platformer mode ----------------
 
-    def _update_platformer(self, keys, delta_time):
-        self._update_jump_timers(keys, delta_time)
+    def _update_platformer(self, delta_time):
+        self._update_jump_timers(delta_time)
 
-        move_x, _ = self._read_move_axis(keys)
+        move_x, _ = self._read_move_axis()
 
         if self.rigidbody:
             self.rigidbody.velocity.x = move_x * self.speed
@@ -175,13 +199,17 @@ class PlayerController(Component):
 
         self._play_platformer_animation(move_x)
 
-    def _update_jump_timers(self, keys, delta_time):
+    def _update_jump_timers(self, delta_time):
         if self.rigidbody:
             self.is_grounded = self.rigidbody.is_grounded
 
-        self._time_since_grounded = 0.0 if self.is_grounded else self._time_since_grounded + delta_time
+        if self.is_grounded:
+            self._time_since_grounded = 0.0
+            self._jumps_used = 0  # touching ground refills every jump
+        else:
+            self._time_since_grounded += delta_time
 
-        if self._is_pressed(keys, "jump"):
+        if self._is_pressed("jump"):
             self._time_since_jump_pressed = 0.0
         else:
             self._time_since_jump_pressed += delta_time
@@ -190,17 +218,26 @@ class PlayerController(Component):
         return self._time_since_jump_pressed <= self.jump_buffer_time
 
     def _can_jump(self):
-        return self._time_since_grounded <= self.coyote_time
+        if self._jumps_used == 0:
+            # The first jump in a chain: normal ground check, with the
+            # coyote-time grace window for "just walked off a ledge".
+            return self._time_since_grounded <= self.coyote_time
+        # Every jump after the first (double/triple jump, ...) is available
+        # immediately while airborne, up to max_jumps - the player is
+        # deliberately using an extra jump, not accidentally leaving a
+        # platform, so coyote time doesn't apply here.
+        return self._jumps_used < self.max_jumps
 
     def _perform_jump(self):
         # Jump speed is set directly rather than added as an impulse on top
-        # of current velocity, so a coyote-time jump (which starts already
-        # falling) launches to the same height as a jump from a standstill -
-        # more predictable and easier to tune than making it mass/velocity
-        # dependent.
+        # of current velocity, so every jump in a chain (including a
+        # coyote-time jump, which starts already falling) launches to the
+        # same height - more predictable and easier to tune than making it
+        # velocity/mass dependent.
         self.rigidbody.velocity.y = -self.jump_force
         self.rigidbody.is_grounded = False
         self.is_grounded = False
+        self._jumps_used += 1
 
         # Push both grace windows past their thresholds so this single press
         # can't also trigger a second jump next frame.

@@ -4,7 +4,7 @@ from engine.components.transform import Transform
 class GameObject:
     """A named container of components. This class intentionally has almost
     no behaviour of its own - everything an object *does* (render, collide,
-    move, follow the player, ...) lives in a Component. GameObject's only
+    move, follow a target, ...) lives in a Component. GameObject's only
     jobs are: own a Transform, own a component list, and run each
     component's start()/update() in a well-defined order.
     """

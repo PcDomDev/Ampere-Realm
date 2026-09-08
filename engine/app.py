@@ -1,6 +1,7 @@
 import pygame
 
 from engine.debug_manager import DebugManager
+from engine.input.input_manager import Input
 from engine.scene_manager import SceneManager
 
 
@@ -17,7 +18,7 @@ class Engine:
     # even if the real frame rate momentarily drops far below that.
     MAX_DELTA_TIME = 0.05
 
-    def __init__(self, width=1280, height=720, title="PygamE", fps=60,
+    def __init__(self, width=1280, height=720, title="Pygame Engine", fps=60,
                  background_color=(30, 30, 35)):
         pygame.init()
 
@@ -32,6 +33,7 @@ class Engine:
         self.clock = pygame.time.Clock()
         self.scene_manager = SceneManager()
         self.debug = DebugManager()
+        self.input = Input()
 
         self.running = False
 
@@ -53,6 +55,7 @@ class Engine:
             delta_time = min(raw_dt, self.MAX_DELTA_TIME)
 
             self._handle_events()
+            self.input.update()
             self.debug.update(delta_time)
 
             if self.active_scene:

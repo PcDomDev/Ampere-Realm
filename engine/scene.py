@@ -1,13 +1,14 @@
 from engine.components.box_collider2d import BoxCollider2D
 from engine.components.sprite_renderer import SpriteRenderer
+from engine.ui.ui_element import UIElement
 from engine.utils.vector2 import Vector2
 
 
 class Scene:
     """A collection of GameObjects, plus the logic to update, collide, and
     render them. This is engine machinery - what a scene *contains* (a
-    player, a floor, a coin, ...) belongs in scenes/game_scene.py or
-    similar, not here.
+    controllable character, a platform, a menu, ...) belongs in
+    scenes/game_scene.py or similar, not here.
     """
 
     def __init__(self, name="Scene"):
@@ -70,6 +71,10 @@ class Scene:
                     trigger.check_trigger_events(other)
 
     def render(self, screen):
+        self._render_world(screen)
+        self._render_ui(screen)
+
+    def _render_world(self, screen):
         offset = Vector2(0.0, 0.0)
         if self.active_camera is not None:
             offset = self.active_camera.get_offset(screen.get_width(), screen.get_height())
@@ -78,5 +83,30 @@ class Scene:
         renderers.sort(key=lambda r: (r.z_index, r.game_object.transform.position.y + r.offset_y))
 
         for r in renderers:
-            draw_pos = r.game_object.transform.position - offset
-            screen.blit(r.sprite, (round(draw_pos.x), round(draw_pos.y)))
+            transform = r.game_object.transform
+            sprite = r.get_transformed_sprite(transform.rotation, transform.scale.x, transform.scale.y)
+            if sprite is None:
+                continue
+
+            # Rotating/scaling changes the surface's own width/height, so
+            # the draw position is recomputed to keep the sprite's *center*
+            # fixed at the expected world position - the usual expected
+            # pivot - rather than its top-left corner drifting as the
+            # surface's bounding box changes size.
+            original_w, original_h = r.sprite.get_size()
+            center = Vector2(
+                transform.position.x + original_w / 2.0,
+                transform.position.y + original_h / 2.0,
+            ) - offset
+
+            new_w, new_h = sprite.get_size()
+            draw_pos = Vector2(center.x - new_w / 2.0, center.y - new_h / 2.0)
+            screen.blit(sprite, (round(draw_pos.x), round(draw_pos.y)))
+
+    def _render_ui(self, screen):
+        """UI draws last, directly in screen space - never offset by the
+        camera, always on top of the world."""
+        elements = [e for e in self.get_components(UIElement) if e.visible]
+        elements.sort(key=lambda e: e.draw_order)
+        for element in elements:
+            element.draw(screen)

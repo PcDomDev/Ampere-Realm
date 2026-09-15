@@ -3,7 +3,7 @@ import warnings
 from engine.components.animator import Animator
 from engine.components.component import Component
 from engine.components.rigidbody2d import Rigidbody2D
-from engine.debug_manager import DebugManager
+from engine.core.debug_manager import DebugManager
 from engine.input.input_manager import Input
 from engine.input.key import Key
 from engine.utils.warnings import EngineWarning

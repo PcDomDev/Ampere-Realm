@@ -11,7 +11,7 @@ class GameObject:
 
     def __init__(self, x=0.0, y=0.0, name="GameObject"):
         self.name = name
-        self.active = True
+        self._active = True
         self.scene = None
         self.components = []
         self._started = False
@@ -25,6 +25,24 @@ class GameObject:
         self.transform = Transform(x, y)
         self._attach(self.transform)
 
+    # -- active flag ----------------------------------------------------------
+    # A property (not a plain attribute) so toggling it can notify the
+    # owning Scene - which keeps Scene's component cache and SpatialHash
+    # correct without either needing to poll every object every frame to
+    # notice a change. See Scene._on_active_changed().
+
+    @property
+    def active(self):
+        return self._active
+
+    @active.setter
+    def active(self, value):
+        if value == self._active:
+            return
+        self._active = value
+        if self.scene is not None:
+            self.scene._on_active_changed(self)
+
     # -- component management ------------------------------------------------
 
     def _attach(self, component):
@@ -37,6 +55,9 @@ class GameObject:
 
         if self._started:
             component.start()
+
+        if self.scene is not None:
+            self.scene._invalidate_component_cache()
 
         return component
 
@@ -53,6 +74,8 @@ class GameObject:
         if component in self.components:
             self.components.remove(component)
             self._order_dirty = True
+            if self.scene is not None:
+                self.scene._invalidate_component_cache()
 
     def _ordered_components(self):
         """Components sorted by `update_order`, ascending. Cached and only

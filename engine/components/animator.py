@@ -30,6 +30,10 @@ class Animator(Component):
         self.loop = True
         self.reverse = False
 
+        # callback(animator, anim_name) - fires once, the frame a
+        # non-looping animation reaches its last frame. Append to subscribe.
+        self.on_finished = []
+
     def start(self):
         self.sprite_renderer = self.game_object.get_component(SpriteRenderer)
         self._apply_current_frame()
@@ -82,11 +86,23 @@ class Animator(Component):
         # matter how much time passed.
         while self._timer >= self.frame_duration and self.is_playing:
             self._timer -= self.frame_duration  # carry the remainder forward
+            was_playing = self.is_playing
             self._advance_frame(frames)
             advanced = True
+            if was_playing and not self.is_playing:
+                self._dispatch_finished()
 
         if advanced:
             self._apply_current_frame()
+
+    def _dispatch_finished(self):
+        for callback in list(self.on_finished):  # copy: a callback may unsubscribe itself
+            try:
+                callback(self, self.current_animation)
+            except Exception as exc:  # noqa: BLE001 - a bad callback must not crash the game
+                from engine.core.debug_manager import DebugManager
+                owner = getattr(self.game_object, "name", "?")
+                DebugManager.log_error(f"Animator on_finished callback on '{owner}' raised {exc!r}")
 
     def _advance_frame(self, frames):
         if self.reverse:

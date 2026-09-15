@@ -1,8 +1,8 @@
 import pygame
 
-from engine.debug_manager import DebugManager
+from engine.core.debug_manager import DebugManager
 from engine.input.input_manager import Input
-from engine.scene_manager import SceneManager
+from engine.core.scene_manager import SceneManager
 
 
 class Engine:
@@ -63,6 +63,7 @@ class Engine:
 
             self.screen.fill(self.background_color)
             if self.active_scene:
+                self.debug.draw_grid(self.screen, self.active_scene.active_camera)
                 self.active_scene.render(self.screen)
                 self.debug.draw_colliders(self.screen, self.active_scene, self.active_scene.active_camera)
             self.debug.draw_overlay(self.screen, self.active_scene)
@@ -80,6 +81,8 @@ class Engine:
                     self.debug.toggle_overlay()
                 elif event.key == pygame.K_F2:
                     self.debug.toggle_colliders()
+                elif event.key == pygame.K_F3:
+                    self.debug.toggle_grid()
 
     def quit(self):
         self.running = False

@@ -1,4 +1,4 @@
-from engine.debug_manager import DebugManager
+from engine.core.debug_manager import DebugManager
 
 
 class SceneManager:

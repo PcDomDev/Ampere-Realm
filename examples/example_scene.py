@@ -1,16 +1,16 @@
 from engine.components.player_controller import PlayerController
 from engine.components.rigidbody2d import Rigidbody2D
-from engine.game_object import GameObject
+from engine.core.game_object import GameObject
 from engine.primitives import create_circle, create_rectangle, create_square
-from engine.scene import Scene
+from engine.core.scene import Scene
 from engine.ui.ui_button import UIButton
 from engine.ui.ui_panel import UIPanel
 from engine.ui.ui_text import UIText
-from scripts.jumps_hud import JumpsHUD
-from scripts.reset_on_click import ResetOnClick
+from examples.scripts.jumps_hud import JumpsHUD
+from examples.scripts.reset_on_click import ResetOnClick
 
 
-def build_game_scene():
+def build_example_scene():
     """Builds the demo scene: a controllable character (double-jump
     enabled), a platform to stand on, a purely decorative circle, and a
     small UI HUD (a jump counter + a reset button).

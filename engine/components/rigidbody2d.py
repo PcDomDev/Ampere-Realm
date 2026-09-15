@@ -1,6 +1,6 @@
 from engine.components.component import Component
 from engine.components.box_collider2d import BoxCollider2D
-from engine.debug_manager import DebugManager
+from engine.core.debug_manager import DebugManager
 from engine.utils.vector2 import Vector2
 
 
@@ -140,20 +140,31 @@ class Rigidbody2D(Component):
         if self.collider:
             self.collider.update(0)
 
-    def _solid_colliders(self):
-        """Every other non-trigger collider belonging to an active object in
-        the scene - i.e. everything this body can physically collide with."""
+    def _solid_colliders_near(self, rect):
+        """Broad-phase-filtered candidates that could physically collide
+        with this body near `rect` - only non-trigger BoxCollider2D
+        instances belonging to active objects (Rigidbody2D only resolves
+        solid collisions against boxes; see CircleCollider2D's docstring
+        for why circles are trigger/overlap-only for now).
+
+        Queries the scene's SpatialHash instead of every collider in the
+        scene, so this stays fast as object count grows - see
+        engine/spatial_hash.py for why that matters and how it stays
+        correct (never stale within a frame).
+        """
         if not self.collider or self.game_object.scene is None:
             return []
+        candidates = self.game_object.scene.spatial_hash.query(rect)
         return [
-            c for c in self.game_object.scene.get_components(BoxCollider2D)
-            if c is not self.collider and not c.is_trigger and c.game_object.active
+            c for c in candidates
+            if c is not self.collider and isinstance(c, BoxCollider2D)
+            and not c.is_trigger and c.game_object.active
         ]
 
     def _resolve_collisions_x(self):
         if not self.collider:
             return
-        for other in self._solid_colliders():
+        for other in self._solid_colliders_near(self.collider.rect):
             if self.collider.rect.colliderect(other.rect):
                 # Snap to the other collider's exact edge using the
                 # transform's true float position, rather than subtracting
@@ -162,7 +173,8 @@ class Rigidbody2D(Component):
                 # nearest pixel, and that rounding error doesn't cancel out
                 # when you later subtract an integer overlap from a float
                 # position - it accumulates into a small but real, visible
-                # jitter. See docs/CHANGELOG.md for the full derivation.
+                # jitter. See the README's Physics section for the full
+                # derivation.
                 if self.velocity.x > 0:
                     self.collider.snap_right_to(other.rect.left)
                 elif self.velocity.x < 0:
@@ -175,7 +187,7 @@ class Rigidbody2D(Component):
             return
 
         collided = False
-        for other in self._solid_colliders():
+        for other in self._solid_colliders_near(self.collider.rect):
             if self.collider.rect.colliderect(other.rect):
                 collided = True
                 if self.velocity.y > 0:
@@ -194,4 +206,7 @@ class Rigidbody2D(Component):
         the collider for solid ground before declaring the body airborne -
         see GROUND_PROBE_DISTANCE above for why."""
         probe_rect = self.collider.rect.move(0, self.GROUND_PROBE_DISTANCE)
-        self.is_grounded = any(probe_rect.colliderect(other.rect) for other in self._solid_colliders())
+        self.is_grounded = any(
+            probe_rect.colliderect(other.rect)
+            for other in self._solid_colliders_near(probe_rect)
+        )

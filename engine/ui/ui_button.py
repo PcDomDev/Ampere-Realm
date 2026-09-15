@@ -3,7 +3,7 @@ click - subscribe via `button.on_click.append(callback)`, the same pattern
 BoxCollider2D uses for on_trigger_enter."""
 import pygame
 
-from engine.debug_manager import DebugManager
+from engine.core.debug_manager import DebugManager
 from engine.input.input_manager import Input
 from engine.ui.ui_element import UIElement
 from engine.ui.ui_style import UIStyle

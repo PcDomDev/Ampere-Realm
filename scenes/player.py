@@ -1,7 +1,4 @@
 import pygame.image
-
-from engine.core import scene
-from engine.core.app import Engine
 from engine.core.game_object import GameObject
 from engine.core.scene import Scene
 from engine.components.camera import Camera
@@ -32,7 +29,7 @@ def build_platformer_scene():
     ))
 
     player.add_component(Rigidbody2D(
-        gravity=900,
+        gravity=2000,
         use_gravity=True,
         drag=2.0
     ))
@@ -47,7 +44,7 @@ def build_platformer_scene():
 
     player.add_component(PlayerController(
         speed=500,
-        jump_force=500,
+        jump_force=800,
         movement_type="platformer",
         max_jumps=2,
         anim_map = {

@@ -1,7 +1,5 @@
 from engine.core.app import Engine
-from engine.components.camera import Camera
-from engine.core.game_object import GameObject
-from scenes.player_test import build_platformer_scene
+from scenes.player import build_platformer_scene
 
 
 

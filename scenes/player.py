@@ -10,7 +10,7 @@ from engine.components.player_controller import PlayerController
 from engine.utils.spritesheet_loader import load_spritesheet_animations
 
 def build_platformer_scene():
-    scene = Scene("Player Test")
+    scene = Scene("Player")
 
     player = GameObject(
         x=0, y=-200,

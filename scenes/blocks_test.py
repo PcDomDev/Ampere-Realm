@@ -21,6 +21,12 @@ def build_test_scene():
     for index in range(50):
         scene.add_game_object(create_default_block(index, index*128, 128))
 
+    # Portals
+    portal1 = create_portal_block(number=1, x=0, y=-128)
+    portal2 = create_portal_block(number=2, x=400, y=-128, target_portal=portal1)
+    scene.add_game_object(portal1)
+    scene.add_game_object(portal2)
+
     # Camera
     camera_go = GameObject(name="Main Camera")
     camera = camera_go.add_component(Camera(

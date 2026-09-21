@@ -47,6 +47,12 @@ class PlayerController(Component):
 
     Reads input through the Input/Key system (engine/input/) rather than
     calling pygame directly.
+
+    Entity events (on `game_object.events`, only emitted if someone has
+    subscribed): "jumped" (jumps_used, remaining), "landed", and
+    "jumps_changed" (remaining, maximum) - e.g. to drive a double-jump HUD:
+
+        player.events.subscribe("jumps_changed", lambda remaining, maximum: ...)
     """
 
     def __init__(
@@ -88,6 +94,7 @@ class PlayerController(Component):
         self.animator = None
         self.rigidbody = None
         self.is_grounded = True
+        self._was_grounded = True
 
         # Tracks last horizontal/vertical orientation for idle/jump animations
         self.facing_x = 1
@@ -118,10 +125,18 @@ class PlayerController(Component):
 
     def _is_just_pressed(self, action):
         """Checks if any key mapped to the action was pressed on this exact frame."""
-        check_fn = getattr(Input, "is_just_pressed", getattr(Input, "get_key_down", None))
-        if check_fn:
-            return any(check_fn(k) for k in self.keybinds.get(action, []))
-        return self._is_pressed(action)
+        return any(Input.is_key_pressed(k) for k in self.keybinds.get(action, []))
+
+    def _emit(self, event, **payload):
+        """Fire an entity-scoped event (only if someone could be listening)."""
+        events = self.game_object._events
+        if events is not None:
+            events.emit(event, **payload)
+
+    def _set_jumps_used(self, count):
+        if count != self._jumps_used:
+            self._jumps_used = count
+            self._emit("jumps_changed", remaining=self.jumps_remaining, maximum=self.max_jumps)
 
     def _read_move_axis(self):
         move_x, move_y = 0, 0
@@ -197,9 +212,13 @@ class PlayerController(Component):
         if self.rigidbody:
             self.is_grounded = self.rigidbody.is_grounded
 
+        if self.is_grounded and not self._was_grounded:
+            self._emit("landed")
+        self._was_grounded = self.is_grounded
+
         if self.is_grounded:
             self._time_since_grounded = 0.0
-            self._jumps_used = 0
+            self._set_jumps_used(0)
         else:
             self._time_since_grounded += delta_time
 
@@ -221,7 +240,8 @@ class PlayerController(Component):
         self.rigidbody.velocity.y = -self.jump_force
         self.rigidbody.is_grounded = False
         self.is_grounded = False
-        self._jumps_used += 1
+        self._set_jumps_used(self._jumps_used + 1)
+        self._emit("jumped", jumps_used=self._jumps_used, remaining=self.jumps_remaining)
 
         self._time_since_grounded = self.coyote_time + 1.0
         self._time_since_jump_pressed = self.jump_buffer_time + 1.0
@@ -264,4 +284,4 @@ class PlayerController(Component):
                 target_anim = self.anim_map.get("idle")
 
             if target_anim:
-                self.animator.play(target_anim)
+                self.animator.play(target_anim)

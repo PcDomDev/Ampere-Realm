@@ -1,14 +1,11 @@
 from engine.core.app import Engine
-from scenes.player import build_platformer_scene
-from scenes.blocks_test import build_test_scene
-
+from engine.core.scene_manager import SceneManager
 
 
 def main():
-    engine = Engine(width=1920, height=1080, title="Ampere Realm", fps=60)
+    engine = Engine(width=1920, height=1080, title="Ampere Realm", fps=144, fixed_fps=60)
 
-    scene = build_test_scene()
-    engine.load_scene("Blocks Test", scene)
+    SceneManager.change_scene()
 
     engine.run()
 

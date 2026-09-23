@@ -10,37 +10,38 @@ from engine.components.player_controller import PlayerController
 from engine.utils.spritesheet_loader import load_spritesheet_animations
 from scripts.portal.portal import Portal
 
-def build_test_scene():
-    scene = Scene("Blocks Test")
 
-    # Player
-    player = create_player()
-    scene.add_game_object(player)
+class BlocksTestScene(Scene):
+    def start(self):
+        super().start()
+        self.name = "Block Test"
 
-    # Blocks
-    for index in range(50):
-        scene.add_game_object(create_default_block(index, index*128, 128))
+        # Player
+        player = create_player()
+        self.add_game_object(player)
 
-    # Portals
-    portal1 = create_portal_block(number=1, x=0, y=-128)
-    portal2 = create_portal_block(number=2, x=400, y=-128, target_portal=portal1)
-    scene.add_game_object(portal1)
-    scene.add_game_object(portal2)
+        # Blocks
+        for index in range(50):
+            self.add_game_object(create_default_block(index, index*128, 128))
 
-    # Camera
-    camera_go = GameObject(name="Main Camera")
-    camera = camera_go.add_component(Camera(
-        target=player,
-        follow_speed=6.0,
-        smooth_follow=True
-    ))
-    scene.add_game_object(camera_go)
-    scene.set_active_camera(camera)
+        # Portals
+        portal1 = create_portal_block(number=1, x=0, y=-128)
+        portal2 = create_portal_block(number=2, x=400, y=-128, target_portal=portal1)
+        self.add_game_object(portal1)
+        self.add_game_object(portal2)
 
-    return scene
+        # Camera
+        camera_go = GameObject(name="Main Camera")
+        camera = camera_go.add_component(Camera(
+            target=player,
+            follow_speed=6.0,
+            smooth_follow=True
+        ))
+        self.add_game_object(camera_go)
+        self.set_active_camera(camera)
 
 
-def create_player( x=0, y=-200, name="Player", json_path="assets/player/player.json", png_path="assets/player/player.png", speed=500, jump_force=800, gravity=2000, anim_map=None):
+def create_player( x=0, y=-200, name="Player", json_path="assets/player/player.json", png_path="assets/player/player.png", speed=600, jump_force=1300, gravity=4500, anim_map=None):
     if anim_map is None:
         anim_map = {
             "idle_right": "idle",
@@ -70,7 +71,7 @@ def create_player( x=0, y=-200, name="Player", json_path="assets/player/player.j
     player.add_component(Rigidbody2D(
         gravity=gravity,
         use_gravity=True,
-        drag=2.0
+        drag=0
     ))
 
     animations = load_spritesheet_animations(json_path, png_path)
@@ -78,7 +79,7 @@ def create_player( x=0, y=-200, name="Player", json_path="assets/player/player.j
     player.add_component(Animator(
         animations=animations,
         default_animation="idle",
-        frame_duration=0.035
+        frame_duration=0.03
     ))
 
     player.add_component(PlayerController(
@@ -93,14 +94,14 @@ def create_player( x=0, y=-200, name="Player", json_path="assets/player/player.j
 
 
 def create_default_block(number, x, y):
-    block = GameObject(x=x, y=y, name=f"Block{number}")
+    block = GameObject(x=x, y=y, name=f"Block{number}", is_static=True)
     block.add_component(SpriteRenderer(sprite=pygame.image.load("assets/blocks/default/block.png"), anchor="center"))
-    block.add_component(BoxCollider2D(size=(128, 128), offset_x=-12, offset_y=12, anchor="center"))
+    block.add_component(BoxCollider2D(size=(128, 128), offset_x=-12, offset_y=12, anchor="center", ))
     return block
 
 
 def create_portal_block(number, x, y, direction="UP", target_portal=None):
-    portal = GameObject(x=x, y=y, name=f"Portal{number}")
+    portal = GameObject(x=x, y=y, name=f"Portal{number}", is_static=True)
     portal.add_component(SpriteRenderer(sprite=pygame.image.load(f"assets/blocks/portal/portal {direction.lower()}.png"), anchor="center"))
     portal.add_component(BoxCollider2D(size=(128, 128), offset_x=-12, offset_y=12, anchor="center"))
 

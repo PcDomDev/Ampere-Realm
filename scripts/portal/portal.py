@@ -1,17 +1,18 @@
 import math
-from engine.components.component import Component
 from engine.components.box_collider2d import BoxCollider2D
+from engine.components.component import Component
 from engine.components.rigidbody2d import Rigidbody2D
 from engine.utils.vector2 import Vector2
 
 
 class Portal(Component):
-    def __init__(self, target_portal=None, direction="UP", cooldown=0.5, damping=0.8):
+    def __init__(self, target_portal=None, direction="UP", cooldown=0.5, damping=0.8, min_launch_speed=300.0):
         super().__init__()
         self.target_portal = target_portal
         self.direction = direction
         self.cooldown = cooldown
         self.damping = damping
+        self.min_launch_speed = min_launch_speed
 
         self.trigger = None
         self._cooldown_timer = 0.0
@@ -42,9 +43,13 @@ class Portal(Component):
         if not target_script:
             return
 
+        rb = obj.get_component(Rigidbody2D)
+
+        current_speed = math.hypot(rb.velocity.x, rb.velocity.y) if rb else 0.0
+
         target_position = Vector2(self.target_portal.transform.position.x, self.target_portal.transform.position.y)
 
-        out_dir = target_script.direction
+        out_dir = str(target_script.direction).upper()
 
         if out_dir == "UP":
             target_position += Vector2(0, -189)
@@ -58,13 +63,15 @@ class Portal(Component):
         obj.transform.position.x = target_position.x
         obj.transform.position.y = target_position.y
 
-        rb = obj.get_component(Rigidbody2D)
         if rb:
             if hasattr(rb, "position"):
                 rb.position = Vector2(target_position.x, target_position.y)
 
-            current_speed = math.hypot(rb.velocity.x, rb.velocity.y)
-            out_speed = current_speed * target_script.damping
+            if hasattr(rb, "teleport"):
+                rb.teleport(target_position.x, target_position.y)
+
+            calculated_speed = current_speed * target_script.damping
+            out_speed = max(calculated_speed, self.min_launch_speed)
 
             if out_dir == "UP":
                 rb.velocity = Vector2(0, -out_speed)

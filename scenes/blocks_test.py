@@ -17,12 +17,15 @@ class BlocksTestScene(Scene):
         self.name = "Block Test"
 
         # Player
-        player = create_player()
+        player = create_player(y=-3000)
         self.add_game_object(player)
 
         # Blocks
         for index in range(50):
             self.add_game_object(create_default_block(index, index*128, 128))
+
+        for index in range(20):
+            self.add_game_object(create_default_block(index, 128, 512 - index * 128))
 
         # Portals
         portal1 = create_portal_block(number=1, x=0, y=-128)
@@ -107,19 +110,19 @@ def create_portal_block(number, x, y, direction="UP", target_portal=None):
 
     dir_upper = direction.upper()
     if dir_upper == "UP":
-        trigger_size = (128, 10)
+        trigger_size = (128, 20)
         trigger_offset = (-12, -54)
     elif dir_upper == "DOWN":
-        trigger_size = (128, 10)
+        trigger_size = (128, 20)
         trigger_offset = (-12, 78)
     elif dir_upper == "LEFT":
-        trigger_size = (10, 128)
+        trigger_size = (20, 128)
         trigger_offset = (-78, 12)
     elif dir_upper == "RIGHT":
-        trigger_size = (10, 128)
+        trigger_size = (20, 128)
         trigger_offset = (54, 12)
     else:
-        trigger_size = (128, 10)
+        trigger_size = (128, 20)
         trigger_offset = (-12, -54)
 
     portal.add_component(BoxCollider2D(

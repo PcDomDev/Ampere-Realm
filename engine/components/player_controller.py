@@ -284,4 +284,4 @@ class PlayerController(Component):
                 target_anim = self.anim_map.get("idle")
 
             if target_anim:
-                self.animator.play(target_anim)
+                self.animator.play(target_anim)
